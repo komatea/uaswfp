@@ -19,7 +19,7 @@ class CreateOrderdetailsTable extends Migration
             $table->integer('subtotal');
             $table->foreignId('product_id')->constrained('products');
             $table->foreignId('order_id')->constrained('orders');
-            $table->timestamps();
+            $table->softdeletes();
         });
     }
 

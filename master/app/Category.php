@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
+    use SoftDeletes;
+    
     protected $table = 'categories';
     protected $primaryKey = 'id';
     public $incrementing = true;
@@ -14,8 +17,7 @@ class Category extends Model
 
      //Set guarde & fillable 
      protected $fillable = [
-        'nama',
-        'logo_image'
+        'name',
     ];
     public function products()
     {

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    protected $table = 'categories';
+    protected $table = 'roles';
     protected $primaryKey = 'id';
     public $incrementing = true;
     public $timestamps = false;
@@ -14,8 +14,7 @@ class Role extends Model
 
      //Set guarde & fillable 
      protected $fillable = [
-        'nama',
-        'logo_image'
+        'name',
     ];
     public function users()
     {

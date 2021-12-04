@@ -17,6 +17,7 @@ class CreateImageProductsTable extends Migration
             $table->id();
             $table->string('filename',255);
             $table->foreignId('product_id')->constrained('products');
+            $table->softdeletes();
         });
     }
 

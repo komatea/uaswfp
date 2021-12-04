@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $table = 'products';
+    protected $table = 'orders';
     protected $primaryKey = 'id';
     public $incrementing = true;
     public $timestamps = true;
@@ -32,6 +32,7 @@ class Order extends Model
 
     public function orderdetails()
     {
-        return $this->belongsToMany(Product::class, 'orderdetails', 'order_id', 'product_id')->withPivot(["qty","subtotal"])->as('orderdetails');
+        return $this->belongsToMany(Product::class, 'orderdetails', 'order_id', 'product_id')
+        ->withPivot(["qty","subtotal"])->as('orderdetails');
     }
 }

@@ -28,6 +28,11 @@ class Product extends Model
         'brand_id'
     ];
     
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
@@ -42,11 +47,15 @@ class Product extends Model
     {
         return $this->hasMany(ImageProduct::class, 'produk_id');
     }
-    
+
     public function orderdetails()
     {
         return $this->belongsToMany(Order::class, 'orderdetails', 'product_id', 'order_id');
     }
     
+    public function takeImage()
+    {
+        return "/storage/images/products/" . $this->filename;
+    }
 
 }
