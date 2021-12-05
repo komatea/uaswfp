@@ -1,0 +1,8 @@
+Brand List
+1. Lenovo
+2. Apple
+3. Asus
+-----------
+Category List
+1. Notebook
+2. Ultrabook
