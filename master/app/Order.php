@@ -10,7 +10,6 @@ class Order extends Model
     protected $primaryKey = 'id';
     public $incrementing = true;
     public $timestamps = true;
-    protected $dateFormat = 'U';
 
      //Set guarde & fillable 
      protected $fillable = [

@@ -13,11 +13,11 @@ class Brand extends Model
     protected $primaryKey = 'id';
     public $incrementing = true;
     public $timestamps = false;
-    protected $dateFormat = 'U';
 
     //Set guarde & fillable 
     protected $fillable = [
         'name',
+        'slug',
         'logo_image'
     ];
 
@@ -33,6 +33,6 @@ class Brand extends Model
 
     public function takeImage()
     {
-        return "/storage/images/brands/" . $this->filename;
+        return "storage/images/brands/" . $this->logo_image;
     }
 }

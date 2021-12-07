@@ -1,5 +1,14 @@
 @extends('customers.layouts.app')
-
+@section('style')
+<style>
+#parallax2{
+	background:url('https://images.pexels.com/photos/51415/pexels-photo-51415.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260') repeat #d3e6eb;
+	background-attachment:fixed;
+	background-position:center center;
+	background-size:cover;
+}
+</style>
+@endsection
 @section('content')
     <!--Slider-->
     <section class="rev_slider_wrapper">
@@ -46,7 +55,7 @@
 
 
     <!-- Delivery Service-->
-    <section id="msg" class="padding_top">
+    {{-- <section id="msg" class="padding_top">
         <div class="container">
             <div class="message">
                 <div class="row">
@@ -57,7 +66,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <!--New Arrivals-->
     <section id="arrivals" class="padding">
@@ -65,131 +74,52 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="arrival_wrap margintop10">
-                        <img src="{{ asset('eren') }}/images/arrival-main.jpg" alt="new arrivals">
+                        <img src="https://images.pexels.com/photos/287662/pexels-photo-287662.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="new arrivals" class="img-responsive" style="width:915px; height:897px;object-fit: cover;">
                         <div class="overlay_arrival">
                             <div class="inner">
-                                <h3 class="uppercase">new arrivals</h3>
+                                <h3 class="uppercase">New You</h3>
                                 <h1 class="uppercase">lookbook</h1>
-                                <h2 class="uppercase content_space"> custom furniture design</h2>
-                                <a href="#." class="btn-white uppercase">shop now </a>
+                                <h2 class="uppercase content_space">Find Your Best Equipment</h2>
+                                <a href="{{ route('customers.products.index') }}" class="btn-white uppercase">shop now </a>
                             </div>
                         </div>
                     </div>
                 </div>
+                @foreach($latestProduct as $product)
                 <div class="col-md-2 col-sm-6">
                     <div class="product_wrap margintop10">
                         <div class="image">
-                            <div class="tag">
+                            {{-- <div class="tag">
                                 <div class="tag-btn">
                                     <span class="uppercase text-center">New</span>
                                 </div>
-                            </div>
-                            <a class="fancybox" href="images/product5.jpg">
-                                <img src="{{ asset('eren') }}/images/product5.jpg" alt="Product" class="img-responsive">
+                            </div> --}}
+                            <a class="fancybox" href="{{asset($product->takeImage())}}">
+                                <img src="{{asset($product->takeImage())}}" alt="Product" class="img-responsive">
                             </a>
                         </div>
                         <div class="product_desc">
-                            <p>Sacrificial Chair Design </p>
-                            <span class="price"><i class="fa fa-gbp"></i>170.00</span>
-                            <a class="fancybox" href="images/product5.jpg" data-fancybox-group="gallery"><i class="fa fa-shopping-bag open"></i></a>
+                            <p><a href="{{ route('customers.products.show', $product->slug) }}">{{ $product->name }}</a></p>
+                            <span class="price">Rp.{{ number_format($product->price * (1 - $product->disc / 100)) }} &nbsp;
+                                <del><span class="discount">Rp.{{ number_format($product->price)}}</span></del></span>
+                            <a class="fancybox" href="{{asset($product->takeImage())}}" data-fancybox-group="gallery"><i class="fa fa-shopping-bag open"></i></a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-2 col-sm-6">
-                    <div class="product_wrap margintop10">
-                        <div class="image">
-                            <a class="fancybox" href="images/product6.jpg"><img src="{{ asset('eren') }}/images/product6.jpg" alt="Product" class="img-responsive">
-                            </a>
-                        </div>
-                        <div class="product_desc">
-                            <p>Sacrificial Chair Design </p>
-                            <span class="price"><i class="fa fa-gbp"></i>170.00</span>
-                            <a class="fancybox" href="images/product6.jpg" data-fancybox-group="gallery"><i class="fa fa-shopping-bag open"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-6">
-                    <div class="product_wrap margintop10">
-                        <div class="image">
-                            <div class="tag">
-                                <div class="tag-btn">
-                                    <span class="uppercase text-center">New</span>
-                                </div>
-                            </div>
-                            <a class="fancybox" href="images/product7.jpg">
-                                <img src="{{ asset('eren') }}/images/product7.jpg" alt="Product" class="img-responsive">
-                            </a>
-                        </div>
-                        <div class="product_desc">
-                            <p>Sacrificial Chair Design </p>
-                            <span class="price"><i class="fa fa-gbp"></i>170.00</span>
-                            <a class="fancybox" href="images/product7.jpg" data-fancybox-group="gallery"><i class="fa fa-shopping-bag open"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-6">
-                    <div class="product_wrap margintop10">
-                        <div class="image">
-                            <div class="tag">
-                                <div class="tag-btn">
-                                    <span class="uppercase text-center">New</span>
-                                </div>
-                            </div>
-                            <a class="fancybox" href="images/product8.jpg">
-                                <img src="{{ asset('eren') }}/images/product8.jpg" alt="Product" class="img-responsive">
-                            </a>
-                        </div>
-                        <div class="product_desc">
-                            <p>Sacrificial Chair Design </p>
-                            <span class="price"><i class="fa fa-gbp"></i>170.00</span>
-                            <a class="fancybox" href="images/product8.jpg" data-fancybox-group="gallery"><i class="fa fa-shopping-bag open"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-6">
-                    <div class="product_wrap margintop10">
-                        <div class="image">
-                            <div class="tag">
-                                <div class="tag-btn">
-                                    <span class="uppercase text-center">New</span>
-                                </div>
-                            </div>
-                            <a class="fancybox" href="images/product9.jpg">
-                                <img src="{{ asset('eren') }}/images/product9.jpg" alt="Product" class="img-responsive">
-                            </a>
-                        </div>
-                        <div class="product_desc">
-                            <p>Sacrificial Chair Design </p>
-                            <span class="price"><i class="fa fa-gbp"></i>170.00</span>
-                            <a class="fancybox" href="images/product9.jpg" data-fancybox-group="gallery"><i class="fa fa-shopping-bag open"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-6">
-                    <div class="product_wrap margintop10">
-                        <div class="image">
-                            <a class="fancybox" href="images/product2.jpg"><img src="{{ asset('eren') }}/images/product2.jpg" alt="Product" class="img-responsive">
-                            </a>
-                        </div>
-                        <div class="product_desc">
-                            <p>Sacrificial Chair Design </p>
-                            <span class="price"><i class="fa fa-gbp"></i>170.00</span>
-                            <a class="fancybox" href="images/product2.jpg" data-fancybox-group="gallery"><i class="fa fa-shopping-bag open"></i></a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
+              
             </div>
         </div>
     </section>
 
     <!--Prallax-->
-    <section id="parallax2" class="padding">
+    <section id="parallax2" class="padding" >
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-6 text-center">
-                    <h2 class="heading_space uppercase">creative design<strong>lighting furniture</strong></h2>
-                    <h3 class="content_space">Typi non habent claritatem insitam.</h3>
-                    <a href="#." class="btn-common uppercase">view collection</a>
+                <div class="col-md-6 text-center" style="color:white">
+                    <h2 class="heading_space uppercase text-white">creative design<strong>lighting furniture</strong></h2>
+                    <h3 class="content_space  text-white">Typi non habent claritatem insitam.</h3>
+                    <a href="#." class="btn-white uppercase">view collection</a>
                 </div>
             </div>
         </div>
@@ -200,108 +130,31 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <h2 class="heading_space uppercase">Features Products</h2>
+                    <h2 class="heading_space uppercase">Find Your Favourite Brand</h2>
                     <p class="content_space">Claritas est etiam processus dynamicus, qui sequitur.</p>
                 </div>
-                <div class="col-md-2 col-sm-6">
+                <div class="d-flex justify-content-around">
+                @foreach($brands as $brand)
+                <div class="col-md-2 col-sm-6 ">
                     <div class="product_wrap bottom_half">
                         <div class="image">
-                            <div class="tag">
-                                <div class="tag-btn">
-                                    <span class="uppercase text-center">New</span>
-                                </div>
-                            </div>
-                            <a class="fancybox" href="images/product1.jpg"><img src="{{ asset('eren') }}/images/product1.jpg" alt="Product" class="img-responsive">
+                            <a class="fancybox" href="images/product1.jpg"><img src="{{asset($brand->takeImage())}}" alt="Product" class="img-responsive">
                             </a>
                         </div>
-                        <div class="product_desc">
-                            <p>Sacrificial Chair Design </p>
-                            <span class="price"><i class="fa fa-gbp"></i>170.00</span>
-                            <a class="fancybox" href="images/product1.jpg" data-fancybox-group="gallery"><i class="fa fa-shopping-bag open"></i></a>
+                        <div class="product_desc text-center">
+                            <p>{{ $brand->name }}</p>
+                        
                         </div>
                     </div>
                 </div>
-                <div class="col-md-2 col-sm-6">
-                    <div class="product_wrap bottom_half">
-                        <div class="image">
-                            <a class="fancybox" href="images/product2.jpg"><img src="{{ asset('eren') }}/images/product2.jpg" alt="Product" class="img-responsive">
-                            </a>
-                        </div>
-                        <div class="product_desc">
-                            <p>Sacrificial Chair Design </p>
-                            <span class="price"><i class="fa fa-gbp"></i>170.00</span>
-                            <a class="fancybox" href="images/product2.jpg" data-fancybox-group="gallery"><i class="fa fa-shopping-bag open"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-6">
-                    <div class="product_wrap bottom_half">
-                        <div class="image">
-                            <a class="fancybox" href="images/product8.jpg"><img src="{{ asset('eren') }}/images/product8.jpg" alt="Product" class="img-responsive">
-                            </a>
-                        </div>
-                        <div class="product_desc">
-                            <p>Sacrificial Chair Design </p>
-                            <span class="price"><i class="fa fa-gbp"></i>170.00</span>
-                            <a class="fancybox" href="images/product8.jpg" data-fancybox-group="gallery"><i class="fa fa-shopping-bag open"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-6">
-                    <div class="product_wrap bottom_half">
-                        <div class="image">
-                            <a class="fancybox" href="images/product4.jpg"><img src="{{ asset('eren') }}/images/product4.jpg" alt="Product" class="img-responsive">
-                            </a>
-                        </div>
-                        <div class="product_desc">
-                            <p>Sacrificial Chair Design </p>
-                            <span class="price"><i class="fa fa-gbp"></i>170.00</span>
-                            <a class="fancybox" href="images/product4.jpg" data-fancybox-group="gallery"><i class="fa fa-shopping-bag open"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-6">
-                    <div class="product_wrap bottom_half">
-                        <div class="image">
-                            <div class="tag">
-                                <div class="tag-btn">
-                                    <span class="uppercase text-center">New</span>
-                                </div>
-                            </div>
-                            <a class="fancybox" href="images/product9.jpg"><img src="{{ asset('eren') }}/images/product9.jpg" alt="Product" class="img-responsive">
-                            </a>
-                        </div>
-                        <div class="product_desc">
-                            <p>Sacrificial Chair Design </p>
-                            <span class="price"><i class="fa fa-gbp"></i>170.00</span>
-                            <a class="fancybox" href="images/product9.jpg" data-fancybox-group="gallery"><i class="fa fa-shopping-bag open"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-6">
-                    <div class="product_wrap bottom_half">
-                        <div class="image">
-                            <div class="tag">
-                                <div class="tag-btn">
-                                    <span class="uppercase text-center">New</span>
-                                </div>
-                            </div>
-                            <a class="fancybox" href="images/product5.jpg"> <img src="{{ asset('eren') }}/images/product5.jpg" alt="Product" class="img-responsive">
-                            </a>
-                        </div>
-                        <div class="product_desc">
-                            <p>Sacrificial Chair Design </p>
-                            <span class="price"><i class="fa fa-gbp"></i>170.00</span>
-                            <a class="fancybox" href="images/product5.jpg" data-fancybox-group="gallery"><i class="fa fa-shopping-bag open"></i></a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
+
         </div>
     </section>
 
     <!--Testinomials-->
-    <section id="testinomialBg" class="padding">
+    {{-- <section id="testinomialBg" class="padding">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -334,10 +187,10 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <!--OUR BLOG-->
-    <section id="blog" class="padding">
+    {{-- <section id="blog" class="padding">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 text-center">
@@ -376,10 +229,10 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <!--BRANDS-->
-    <section id="brands" class="padding_bottom">
+    {{-- <section id="brands" class="padding_bottom">
         <h3 class="hidden">hidden</h3>
         <div class="container">
             <div class="row">
@@ -409,10 +262,10 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <!--NEWSLETER-->
-    <section id="newsletter" class="padding">
+    {{-- <section id="newsletter" class="padding">
         <div class="container">
             <div class="row">
                 <div class="col-md-2"></div>
@@ -431,11 +284,11 @@
                 <div class="col-md-2"></div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
 
     <!--Testinomial-->
-    <section id="availability" class="padding">
+    {{-- <section id="availability" class="padding">
         <div class="container">
             <div class="row">
                 <div class="col-sm-4">
@@ -461,5 +314,5 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 @endsection

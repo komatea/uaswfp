@@ -1,85 +1,54 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Category;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $categories = new Category();
+        if (request('keyword')) {
+            $wildcards = '%' . request('keyword') . '%';
+            $categories = $categories->where(request('searchBy'), 'like', $wildcards);
+        }
+        $categories = $categories->paginate(12);
+
+        return view('admins.categories.index', compact('categories'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $data['slug'] = Str::slug($request['name']);
+        Category::create($data);
+        session()->flash('success', 'New Category Succesfully Created');
+        return redirect()->to(route('admins.categories.index'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
+    public function updateInline(Request $request)
     {
-        //
+        $id = $request->get('id');
+        $fname = $request->get('fname');
+        $value = $request->get('value');
+
+        $category = Category::find($id);
+        $category->$fname = $value;
+        $category->save();
+        return response()->json(array('status' => 'OK', 'msg' => 'Category Data Updated'), 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Category $category)
+    public function destroyNoReload(Request $request)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Category $category)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Category $category)
-    {
-        //
+        $category = Category::find($request['id']);
+        $category->delete();
+        return response()->json(array(
+            'msg' => "Success"
+        ), 200);
     }
 }

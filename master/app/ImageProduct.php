@@ -13,7 +13,6 @@ class ImageProduct extends Model
     protected $primaryKey = 'id';
     public $incrementing = true;
     public $timestamps = false;
-    protected $dateFormat = 'U';
 
      //Set guarde & fillable 
      protected $fillable = [

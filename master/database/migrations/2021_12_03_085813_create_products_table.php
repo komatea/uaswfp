@@ -15,16 +15,28 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->integer('price')->nullable();
-            $table->integer('disc')->nullable();
-            $table->text('description')->nullable();
-            $table->string('display_size')->nullable();
-            $table->string('display_resolution')->nullable();
+            $table->string('name');
+            $table->integer('price');
+            $table->integer('disc');
+            $table->text('description');
+            $table->text('interfaces')->nullable();
+            
+            $table->string('graphics_card')->nullable();
             $table->string('processor')->nullable();
+            $table->string('display')->nullable();
+
             $table->string('ram')->nullable();
-            $table->string('slug')->nullable();
-            $table->string('main_image')->nullable();
+            $table->string('hardisk')->nullable();
+            $table->string('ssd')->nullable();
+            
+            $table->string('keyboard')->nullable();
+            $table->string('camera')->nullable();
+            $table->string('wifi')->nullable();
+            $table->string('speaker')->nullable();
+            
+            $table->string('weight');
+            $table->string('slug');
+            $table->string('main_image');
             $table->foreignId('brand_id')->constrained('brands');
             $table->foreignId('category_id')->constrained('categories');
             $table->timestamps();

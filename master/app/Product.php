@@ -10,7 +10,6 @@ class Product extends Model
     protected $primaryKey = 'id';
     public $incrementing = true;
     public $timestamps = true;
-    protected $dateFormat = 'U';
 
      //Set guarde & fillable 
      protected $fillable = [
@@ -18,14 +17,22 @@ class Product extends Model
         'price',
         'disc',
         'description',
-        'display_size',
-        'display_resolution',
+        'interfaces',
+        'graphics_card',
         'processor',
+        'display',
         'ram',
+        'hardisk',
+        'ssd',
+        'keyboard',
+        'camera',
+        'wifi',
+        'speaker',
+        'weight',
         'slug',
         'main_image',
+        'brand_id',
         'category_id',
-        'brand_id'
     ];
     
     public function getRouteKeyName()
@@ -45,7 +52,7 @@ class Product extends Model
 
     public function imageProducts()
     {
-        return $this->hasMany(ImageProduct::class, 'produk_id');
+        return $this->hasMany(ImageProduct::class, 'product_id');
     }
 
     public function orderdetails()
@@ -55,7 +62,8 @@ class Product extends Model
     
     public function takeImage()
     {
-        return "/storage/images/products/" . $this->filename;
+        return "/storage/images/products/" . $this->main_image;
     }
+
 
 }

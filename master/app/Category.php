@@ -13,12 +13,13 @@ class Category extends Model
     protected $primaryKey = 'id';
     public $incrementing = true;
     public $timestamps = false;
-    protected $dateFormat = 'U';
 
      //Set guarde & fillable 
      protected $fillable = [
         'name',
+        'slug'
     ];
+    
     public function products()
     {
         return $this->hasMany(Product::class, 'product_id');

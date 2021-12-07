@@ -1,85 +1,105 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Brand;
+use App\Category;
+use App\Http\Controllers\Controller;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $products = new Product();
+        $products = $products->join('brands', 'products.brand_id', '=', 'brands.id')->join('categories', 'products.category_id', '=', 'categories.id');
+        if (request('keyword')) {
+            $wildcards = '%' . request('keyword') . '%';
+            $products = $products->where(request('searchBy'), 'like', $wildcards);
+        }
+        $products = $products->select('products.*')->paginate(12);
+        return view('admins.products.index', compact('products'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        $brands = Brand::all();
+        $categories = Category::all();
+        return view('admins.products.create', compact('brands', 'categories'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'price' => ['required', 'numeric'],
+            'disc' => ['required', 'numeric'],
+            'description' => 'required',
+            'weight' => ['required', 'numeric'],
+            'slug' => 'required',
+            'main_image' => ['required', 'image'],
+            'brand_id' => 'required',
+            'category_id' => 'required',
+        ]);
+
+        $data = $request->all();
+
+        $file = $request->file('main_image');
+        $imgFile = time() . "_" . $file->getClientOriginalName();
+        $file->move('storage/images/products/', $imgFile);
+        $data['main_image'] = $imgFile;
+
+        Product::create($data);
+        session()->flash('success', 'New Product Succesfully Created');
+        return redirect()->to(route('admins.products.index'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function show(Product $product)
     {
-        //
+        return view('admins.products.show', compact('product'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Product $product)
     {
-        //
+        $brands = Brand::all();
+        $categories = Category::all();
+        return view('admins.products.edit', compact('product', 'brands', 'categories'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Product $product)
     {
-        //
+        $attr = $request->all();
+
+        if ($request->file('main_image')) {
+            File::delete($product->takeImage());
+            $file = $request->file('main_image');
+            $imgFile = time() . "_" . $file->getClientOriginalName();
+            $file->move('storage/images/products/', $imgFile);
+            $attr['main_image'] = $imgFile;
+        }
+
+        $product->update($attr);
+        session()->flash("success", "Product $product->id successfuly updated");
+        return redirect()->to(route('admins.products.index'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        session()->flash('success', "Product $product->id successfuly deleted");
+        return redirect()->to(route('admins.products.index'));
     }
+
+    public function destroyNoReload(Request $request)
+    {
+        $product = Product::find($request['id']);
+        File::delete($product->takeImage());
+        $product->delete();
+        return response()->json(array(
+            'msg' => "Success"
+        ), 200);
+    }
+
 }

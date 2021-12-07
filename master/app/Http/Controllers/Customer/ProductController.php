@@ -17,8 +17,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        return view('customers.products.index', ['data' => $products, 'categories' => Category::all(), 'brands' => Brand::all()]);
+        $products = Product::paginate(10);
+        return view('customers.products.index', ['products' => $products, 'categories' => Category::all(), 'brands' => Brand::all()]);
     }
 
     /**
@@ -50,7 +50,11 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        $categoryProduct = $product->category->id;
+
+        $upsells = Product::where('category_id', $categoryProduct )->get();
+        // dd($upsells);
+        return view('customers.products.show', ['product' => $product,'upsells'=>$upsells]);
     }
 
     /**

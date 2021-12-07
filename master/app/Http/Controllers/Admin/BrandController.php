@@ -1,86 +1,72 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Brand;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class BrandController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $brands = Brand::all();
-        return view('admins.brands.index', ['data' => $brands]);
+        $brands = new Brand();
+        if (request('keyword')) {
+            $wildcards = '%' . request('keyword') . '%';
+            $brands = $brands->where(request('searchBy'), 'like', $wildcards);
+        }
+        $brands = $brands->paginate(12);
+
+        return view('admins.brands.index', compact('brands'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('admins.brands.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $data['slug'] = Str::slug($request['name']);
+        Brand::create($data);
+        session()->flash('success', 'New Brand Succesfully Created');
+        return redirect()->to(route('admins.brands.index'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Brand  $brand
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Brand $brand)
-    {
-        //
+    public function changeImage(Request $request){
+        $id = $request->get('id');
+        $brand = Brand::find($id);
+       
+        // Remove the old Image
+        File::delete($brand->takeImage());
+
+        $file = $request->file('logo_image');
+        $imgFile = time() . "_" . $file->getClientOriginalName();
+        $file->move('storage/images/brands/', $imgFile);
+
+
+        $brand->logo_image = $imgFile;
+        $brand->save();
+        return redirect()->route('admins.brands.index')->with('status', 'Brand Logo has Changed');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Brand  $brand
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Brand $brand)
+    public function updateInline(Request $request)
     {
-        //
+        $id = $request->get('id');
+        $fname = $request->get('fname');
+        $value = $request->get('value');
+
+        $brand = Brand::find($id);
+        $brand->$fname = $value;
+        $brand->save();
+        return response()->json(array('status' => 'OK', 'msg' => 'Brand Data Updated'), 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Brand  $brand
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Brand $brand)
+    public function destroyNoReload(Request $request)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Brand  $brand
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Brand $brand)
-    {
-        //
+        $brand = Brand::find($request['id']);
+        File::delete($brand->takeImage());
+        $brand->delete();
+        return response()->json(array(
+            'msg' => "Success"
+        ), 200);
     }
 }

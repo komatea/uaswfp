@@ -1,85 +1,39 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\ImageImageProduct;
 use App\ImageProduct;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class ImageProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function addImageProduct(Request $request)
     {
-        //
+        $id = $request['id'];
+
+        $file = $request->file('image_product');
+        $imgFile = time() . "_" . $file->getClientOriginalName();
+        $file->move('storage/images/products/', $imgFile);
+        $attr['filename'] = $imgFile;
+        $attr['product_id'] = $id;
+
+        ImageProduct::create($attr);
+        session()->flash('success', 'New ImageProduct Succesfully Added');
+        return back();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function destroyImageProduct(Request $request)
     {
-        //
-    }
+        $imageProduct = ImageProduct::find($request['id']);
+        File::delete($imageProduct->takeImage());
+        $imageProduct->delete();
+        session()->flash('success', "ImageProduct $imageProduct->id successfuly deleted");
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\ImageProduct  $imageProduct
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ImageProduct $imageProduct)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\ImageProduct  $imageProduct
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ImageProduct $imageProduct)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ImageProduct  $imageProduct
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, ImageProduct $imageProduct)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\ImageProduct  $imageProduct
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ImageProduct $imageProduct)
-    {
-        //
+        return response()->json(array(
+            'msg' => "Success"
+        ), 200);
     }
 }
