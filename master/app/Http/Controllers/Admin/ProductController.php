@@ -19,7 +19,7 @@ class ProductController extends Controller
             $wildcards = '%' . request('keyword') . '%';
             $products = $products->where(request('searchBy'), 'like', $wildcards);
         }
-        $products = $products->select('products.*')->paginate(12);
+        $products = $products->select('products.*')->paginate(5);
         return view('admins.products.index', compact('products'));
     }
 

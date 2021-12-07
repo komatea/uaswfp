@@ -17,8 +17,8 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->dateTime('orderdate');
             $table->integer('grand_total');
-            $table->foreignId('customer_id')->nullable()->constrained('users');
-            $table->foreignId('employee_id')->constrained('users');
+            $table->foreignId('customer_id')->constrained('users');
+            $table->foreignId('employee_id')->nullable()->constrained('users');
             $table->string('status');
             $table->timestamps();
             $table->softdeletes();

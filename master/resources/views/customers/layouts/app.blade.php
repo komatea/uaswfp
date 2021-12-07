@@ -40,47 +40,46 @@
     </div>
 
 
-    <div class="container-fluid">
 
-        <header class="right-menu">
-            <div class="container-fluid">
-                <div class="row">
-                    <!-- Start Navigation -->
-                    <nav class="navbar navbar-default navbar-fixed-top bootsnav "  style="padding: 0 25px"></nav>
-                        <!-- Start Atribute Navigation -->
-                        <div class="attr-nav">
-                            <ul>
-                                <li class="cart-toggler">
-                                    <a href="#.">
-                                        <i class="fa fa-shopping-cart"></i>
-                                        <span class="badge">3</span>
-                                    </a>
-                                </li>
-                                <li class="search"><a href="#."><i class="fa fa-search"></i></a>
-                                </li>
-                                {{-- <li class="side-menu"><a href="#."><i class="fa fa-bars"></i></a>
-                                </li> --}}
-                            </ul>
-                        </div>
-
-                        <!-- Start Header Navigation -->
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
-                                <i class="fa fa-bars"></i>
-                            </button>
-                            <a class="navbar-brand" href="index3.html"><img src="{{ asset('eren') }}/images/logo-black.png" class="logo" alt="">
+    <header class="right-menu">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Start Navigation -->
+                <nav class="navbar navbar-default navbar-fixed-top bootsnav " style="padding: 0 25px"></nav>
+                <!-- Start Atribute Navigation -->
+                <div class="attr-nav">
+                    <ul>
+                        <li class="cart-toggler">
+                            <a href="#.">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span class="badge">3</span>
                             </a>
-                        </div>
-                        <!-- End Header Navigation -->
+                        </li>
+                        <li class="search"><a href="#."><i class="fa fa-search"></i></a>
+                        </li>
+                        {{-- <li class="side-menu"><a href="#."><i class="fa fa-bars"></i></a>
+                                </li> --}}
+                    </ul>
+                </div>
 
-                        <div class="collapse navbar-collapse" id="navbar-menu">
-                            <ul class="nav navbar-nav navbar-right" data-in="fadeIn" data-out="fadeOut">
-                                <li>
-                                    <a href="{{ route('customers.index') }}">Home</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('customers.products.index') }}" >Products</a>
-                                    {{-- <ul class="dropdown-menu">
+                <!-- Start Header Navigation -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand" href="index3.html"><img src="{{ asset('eren') }}/images/logo-black.png" class="logo" alt="">
+                    </a>
+                </div>
+                <!-- End Header Navigation -->
+
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    <ul class="nav navbar-nav navbar-right" data-in="fadeIn" data-out="fadeOut">
+                        <li>
+                            <a href="{{ route('customers.index') }}">Home</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('customers.products.index') }}">Products</a>
+                            {{-- <ul class="dropdown-menu">
                                         <li><a href="grid.html">Grid Default</a>
                                         </li>
                                         <li><a href="grid_list.html">Grid Lists</a>
@@ -90,10 +89,10 @@
                                         <li><a href="list_sidebar.html">Lists Sidebar</a>
                                         </li>
                                     </ul> --}}
-                                </li>
-                                <li><a href="{{ route('customers.products.compare') }}">Compare</a>
-                                </li>
-                                {{-- <li class="dropdown megamenu-fw">
+                        </li>
+                        <li><a href="{{ route('customers.products.compare') }}">Compare</a>
+                        </li>
+                        {{-- <li class="dropdown megamenu-fw">
                                     <a href="#." class="dropdown-toggle" data-toggle="dropdown">pages</a>
                                     <ul class="dropdown-menu megamenu-content" role="menu">
                                         <li>
@@ -146,109 +145,112 @@
                                         </li>
                                     </ul>
                                 </li> --}}
-                                {{-- <li><a href="#.">about us</a>
+                        {{-- <li><a href="#.">about us</a>
                                 </li> --}}
-                                <li><a href="#">Login</a>
-                                </li>
-                            </ul>
-                        </div>
+                        @auth
+                            <li><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Logout') }}</a></li>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
+                        @else
+                            <li><a href="{{ route('login') }}">Login</a></li>
+                        @endauth
+                    </ul>
+                </div>
 
-                        <!-- Start Side Menu -->
-                        <div class="side" >
-                            <a href="#." class="close-side"><i class="fa fa-times"></i></a>
-                            <div class="widget">
-                                <h6 class="title">Hi, nama disini </h6>
-                                <ul class="link">
-                                    <li><a href="">My Cart</a>
-                                    </li>
-                                    <li><a href="#.">My History</a>
-                                    </li>
-                                    <li><a href="#.">Logout</a>
-                                    </li>
-                                </ul>
-                            </div>
-                           
-                        </div>
-                        <!-- End Side Menu -->
-
-                        <!--Search Bar-->
-                        <div class="search-toggle">
-                            <div class="top-search">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search">
-                                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                        <ul class="cart-list">
-                            <li>
-                                <a href="#." class="photo"><img src="{{ asset('eren') }}/images/hover-cart.jpg" class="cart-thumb" alt="" />
-                                </a>
-                                <h6><a href="#.">Sacrificial Chair Design </a></h6>
-                                <p>Qty: 2 <span class="price">$170.00</span>
-                                </p>
+                <!-- Start Side Menu -->
+                <div class="side">
+                    <a href="#." class="close-side"><i class="fa fa-times"></i></a>
+                    <div class="widget">
+                        <h6 class="title">Hi, nama disini </h6>
+                        <ul class="link">
+                            <li><a href="">My Cart</a>
                             </li>
-                            <li class="total clearfix">
-                                <div class="pull-right"><strong>Shipping</strong>: $5.00</div>
-                                <div class="pull-left"><strong>Total</strong>: $173.00</div>
+                            <li><a href="#.">My History</a>
                             </li>
-                            <li class="cart-btn">
-                                <a href="#." class="active">VIEW CART </a>
-                                <a href="#.">CHECKOUT </a>
+                            <li><a href="#.">Logout</a>
                             </li>
                         </ul>
-                    </nav>
+                    </div>
+
                 </div>
-            </div>
-        </header>
+                <!-- End Side Menu -->
 
-        <main>
-            @yield('content')
-        </main>
-
-
-        <!--BEGIN Footer-->
-        <footer class="padding plain_footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3 col-sm-1"></div>
-                    <div class="col-md-6 col-sm-10">
-                        <div class="footer_panel text-center">
-                            <a href="index3.html"><img src="{{ asset('eren') }}/images/logo.png" alt="logo" class="content_space">
-                            </a>
-                            <p class="content_space">Typi non habent claritatem insitam, est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus.</p>
-                            <ul class="social">
-                                <li><a href="#."><i class="fa fa-facebook"></i></a>
-                                </li>
-                                <li><a href="#."><i class="fa fa-twitter"></i></a>
-                                </li>
-                                <li><a href="#."><i class="fa fa-rss"></i></a>
-                                </li>
-                                <li><a href="#."><i class="fa fa-google-plus"></i></a>
-                                </li>
-                                <li><a href="#."><i class="fa fa-linkedin"></i></a>
-                                </li>
-                            </ul>
+                <!--Search Bar-->
+                <div class="search-toggle">
+                    <div class="top-search">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-1"></div>
                 </div>
+                <ul class="cart-list">
+                    <li>
+                        <a href="#." class="photo"><img src="{{ asset('eren') }}/images/hover-cart.jpg" class="cart-thumb" alt="" />
+                        </a>
+                        <h6><a href="#.">Sacrificial Chair Design </a></h6>
+                        <p>Qty: 2 <span class="price">$170.00</span>
+                        </p>
+                    </li>
+                    <li class="total clearfix">
+                        <div class="pull-right"><strong>Shipping</strong>: $5.00</div>
+                        <div class="pull-left"><strong>Total</strong>: $173.00</div>
+                    </li>
+                    <li class="cart-btn">
+                        <a href="#." class="active">VIEW CART </a>
+                        <a href="#.">CHECKOUT </a>
+                    </li>
+                </ul>
+                </nav>
             </div>
-        </footer>
-        <!--END Footer-->
+        </div>
+    </header>
 
-        <div class="copyright">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12 text-center">
-                        <p>Copyright &copy; 2016 <a href="#.">Erene</a>. All Right Reserved.</p>
+    <main>
+        @yield('content')
+    </main>
+
+
+    <!--BEGIN Footer-->
+    <footer class="padding plain_footer" style="margin-top: 40px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-1"></div>
+                <div class="col-md-6 col-sm-10">
+                    <div class="footer_panel text-center">
+                        <a href="index3.html"><img src="{{ asset('eren') }}/images/logo.png" alt="logo" class="content_space">
+                        </a>
+                        <p class="content_space">Typi non habent claritatem insitam, est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus.</p>
+                        <ul class="social">
+                            <li><a href="#."><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li><a href="#."><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li><a href="#."><i class="fa fa-rss"></i></a>
+                            </li>
+                            <li><a href="#."><i class="fa fa-google-plus"></i></a>
+                            </li>
+                            <li><a href="#."><i class="fa fa-linkedin"></i></a>
+                            </li>
+                        </ul>
                     </div>
+                </div>
+                <div class="col-md-3 col-sm-1"></div>
+            </div>
+        </div>
+    </footer>
+    <!--END Footer-->
+
+    <div class="copyright">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <p>Copyright &copy; 2016 <a href="#.">Erene</a>. All Right Reserved.</p>
                 </div>
             </div>
         </div>
-
-
     </div>
+
+
 
     {{-- BEGIN CORE PLUGINS --}}
     <script src="{{ asset('eren') }}/js/jquery-2.2.3.js"></script>

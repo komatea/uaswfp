@@ -25,7 +25,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="design clearfix">
-                            <div class="col-xs-5 col-xs-offset-1">
+                            <div class="col-5 col-offset-1">
                                 <div class="design_img">
                                     {{-- <div class="tag">
                     <div class="tag-btn">

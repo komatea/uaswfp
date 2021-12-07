@@ -5,7 +5,7 @@
     <section class="header_layout2 padding">
         <div class="container">
             <div class="header_content padding">
-                <div class="row">
+                <div class="ro{{ w"> }}
                     <div class="col-md-12 text-center">
                         <h2 class="heading_space uppercase">creative design<strong>lighting furniture</strong></h2>
                         <h3 class="content_space">Typi non habent claritatem insitam.</h3>
@@ -35,7 +35,7 @@
 
 
     <section class="grid padding">
-        <h3 class="hidden">hidden</h3>
+        <h3 class="hidden">hidden</h3>{{  }}
         <div class="container">
             <div class="col-md-3 col-sm-3">
                 <aside class="sidebar">
@@ -61,7 +61,7 @@
                             </div>
                             <div class="set">
                                 <a href="#." class="uppercase">women <i class="fa fa-plus"></i></a>
-                                <div class="content">
+                                <div class="content">{{  }}
                                     <ul>
                                         <li><a href="#.">Bag & Luggage</a>
                                         </li>
@@ -148,7 +148,7 @@
                         </ul>
                     </div>
                     <div class="widget content_space">
-                        <h5 class="uppercase marginbottom15">Category</h5>
+                        <h5 class="uppercase mb-5">Category</h5>
                         <ul class="category">
                             @foreach ($categories as $category)
                             <li><a href="#.">{{ $category->name }}<span>(x)</span></a>

@@ -18,8 +18,8 @@
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('vuexy') }}/app-assets/vendors/css/vendors.min.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('vuexy') }}/app-assets/vendors/css/forms/select/select2.min.css">
-    <link rel="stylesheet" type="text/css" href="{{  asset('vuexy') }}/app-assets/vendors/css/extensions/swiper.min.css">
-    <link rel="stylesheet" type="text/css" href="{{  asset('vuexy') }}/app-assets/css/plugins/extensions/ext-component-swiper.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vuexy') }}/app-assets/vendors/css/extensions/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vuexy') }}/app-assets/css/plugins/extensions/ext-component-swiper.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -43,6 +43,14 @@
 
     <!-- Template files -->
     <link rel="stylesheet" type="text/css" href="app-assets/css/plugins/extensions/ext-component-swiper.css">
+    <style>
+        .editable {
+            cursor: pointer;
+        }
+        .editable:hover {
+            color: orange;
+        }
+    </style>
 
     @yield('header')
 </head>
@@ -154,24 +162,37 @@
                 <div class="divider">
                     <div class="divider-text">Customer</div>
                 </div>
-                <li class="nav-item{{ $pageActive == 'admins.customers.index' ? ' active' : '' }}">
-                    <a class="d-flex align-items-center" href="#">
+                <li class="nav-item{{ $pageActive == 'admins.orders.index' ? ' active' : '' }}">
+                    <a class="d-flex align-items-center" href="{{ route('admins.orders.index') }}">
                         <i data-feather="shopping-cart"></i>
                         <span class="menu-title text-truncate">Orders</span>
-                        <span id="registration_unverified" class="badge{{ $pageActive == 'admins.customers.index' ? ' bg-warning ' : ' badge-light-warning ' }}rounded-pill ms-auto me-1">
+                        <span id="waiting_orders" class="badge{{ $pageActive == 'admins.orders.index' ? ' bg-secondary ' : ' badge-light-secondary ' }}rounded-pill ms-auto me-1">
                             <div class="spinner-border spinner-border-sm" role="status" width:>
                             </div>
                         </span>
                     </a>
                 </li>
 
+                @if (auth()->user()->role->name == "owner")
                 <div class="divider">
                     <div class="divider-text">Owner</div>
                 </div>
                 <li class="nav-item{{ $pageActive == 'admins.users.index' ? ' active' : '' }}">
-                    <a class="d-flex align-items-center" href="#">
+                    <a class="d-flex align-items-center" href="{{ route('admins.users.index') }}">
                         <i data-feather="users"></i>
                         <span class="menu-title text-truncate">Users</span>
+                    </a>
+                </li>
+                @endif
+
+                <div class="divider">
+                    <div class="divider-text">Settings</div>
+                </div>
+                <li class="nav-item{{ $pageActive == 'logout' ? ' active' : '' }}">
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
+                    <a class="d-flex align-items-center" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                        <i data-feather="log-out"></i>
+                        <span class="menu-title text-truncate">Logout</span>
                     </a>
                 </li>
             </ul>
@@ -196,7 +217,7 @@
     <footer class="footer footer-static footer-light">
         <p class="clearfix mb-0"><span class="float-md-start d-block d-md-inline-block mt-25">COPYRIGHT &copy; BukuLaptop<span class="d-none d-sm-inline-block">,
                     All rights Reserved</span></span>
-            <span class="float-md-end d-none d-md-block">SI Mohon Dicintai<i data-feather="heart"></i></span>
+            <span class="float-md-end d-none d-md-block">Made with Love<i data-feather="heart"></i></span>
         </p>
     </footer>
     <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
@@ -205,8 +226,8 @@
 
     <!-- BEGIN: Vendor JS-->
     <script src="{{ asset('vuexy') }}/app-assets/vendors/js/vendors.min.js"></script>
-    <script src="{{  asset('vuexy') }}/app-assets/vendors/js/extensions/swiper.min.js"></script>
-    <script src="{{  asset('vuexy') }}/app-assets/js/scripts/extensions/ext-component-swiper.js"></script>
+    <script src="{{ asset('vuexy') }}/app-assets/vendors/js/extensions/swiper.min.js"></script>
+    <script src="{{ asset('vuexy') }}/app-assets/js/scripts/extensions/ext-component-swiper.js"></script>
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Page Vendor JS-->
@@ -226,7 +247,7 @@
     <script src="{{ asset('vuexy') }}/app-assets/js/scripts/components/components-popovers.js"></script>
     <!-- END: Page JS-->
 
-    
+
 
 
     <script>
@@ -237,6 +258,16 @@
                     height: 14
                 });
             }
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('admins.orders.getWaitingCount') }}",
+                data: {
+                    '_token': $('meta[name="csrf-token"]').attr('content'),
+                },
+                success: function(data) {
+                    $("#waiting_orders").html(data["waiting_orders"]);
+                }
+            });
         })
     </script>
 

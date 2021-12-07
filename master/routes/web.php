@@ -31,24 +31,34 @@ Route::group(['as' => 'customers.'], function () {
 
 
 Route::group(['prefix' => 'admins', 'as' => 'admins.'], function () {
+    Route::get('/', 'Admin\HomeController@index')->name('index');
+
     // Brands
     Route::post('/brands/updateInline', 'Admin\BrandController@updateInline')->name('brands.updateInline');
     Route::post('/brands/destroyNoReload','Admin\BrandController@destroyNoReload')->name('brands.destroyNoReload');
     Route::post('/brands/changeImage','Admin\BrandController@changeImage')->name('brands.changeImage');
     Route::resource('/brands','Admin\BrandController');
 
-    Route::get('/', 'Admin\HomeController@index')->name('index');
-
+    // Products
     Route::post('/products/destroyImageProduct','Admin\ImageProductController@destroyImageProduct')->name('products.destroyImageProduct');
     Route::post('/products/addImageProduct','Admin\ImageProductController@addImageProduct')->name('products.addImageProduct');
     Route::post('/products/destroyNoReload','Admin\ProductController@destroyNoReload')->name('products.destroyNoReload');
     Route::resource('/products','Admin\ProductController');
-
+    
+    // Categories
     Route::post('/categories/updateInline','Admin\CategoryController@updateInline')->name('categories.updateInline');
     Route::post('/categories/destroyNoReload','Admin\CategoryController@destroyNoReload')->name('categories.destroyNoReload');
     Route::resource('/categories','Admin\CategoryController');
-
+    
+    // Orders
+    Route::get('/orders/{order}/read','Admin\OrderController@read')->name('orders.read');
+    Route::post('/orders/getWaitingCount','Admin\OrderController@getWaitingCount')->name('orders.getWaitingCount');
+    Route::post('/orders/changeStatus','Admin\OrderController@changeStatus')->name('orders.changeStatus');
+    Route::post('/orders/destroyNoReload','Admin\OrderController@destroyNoReload')->name('orders.destroyNoReload');
     Route::resource('/orders','Admin\OrderController');
-    Route::resource('/orderdetails','Admin\OrderDetailController');
+    
+    // Users
+    Route::post('/users/updateInline','Admin\UserController@updateInline')->name('users.updateInline');
+    Route::post('/users/changeUserStatus','Admin\UserController@changeUserStatus')->name('users.changeUserStatus');
     Route::resource('/users','Admin\UserController');
 });

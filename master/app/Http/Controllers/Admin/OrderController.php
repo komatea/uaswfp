@@ -5,12 +5,46 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class OrderController extends Controller
 {
+    public function getWaitingCount()
+    {
+        $waiting_orders = count(Order::where('status', "waiting")->get());
+        return response()->json(array(
+            'waiting_orders' => $waiting_orders,
+        ), 200);
+    }
+
     public function index()
     {
-        return view('admins.orders.index');
+        $orders = new Order();
+        $orders = $orders->join('users as customer', 'orders.customer_id', '=', 'customer.id')->leftJoin('users as employee', 'orders.employee_id', '=', 'employee.id');
+        if (request('keyword')) {
+            $wildcards = '%' . request('keyword') . '%';
+            $orders = $orders->where(request('searchBy'), 'like', $wildcards);
+        }
+        if (request('status')) {
+            $orders = $orders->whereIn('orders.status', request('status'));
+        }
+        $orders = $orders->select('orders.*')->paginate(12);
+        return view('admins.orders.index', compact('orders'));
+    }
+
+    public function read(Order $order)
+    {
+        return view('admins.orders.read', compact('order'));
+    }
+
+    public function changeStatus(Request $request)
+    {
+        $order = Order::find($request['id']);
+        if($request['employee_id']) $order->employee_id = $request['employee_id'];
+        $order->status = $request['status'];
+        $order->save();
+        session()->flash('success', 'Order Status has been changed Successfuly');
+        return back();
     }
 
     public function create()
@@ -49,5 +83,15 @@ class OrderController extends Controller
         $order->delete();
         session()->flash('success', "Order $order->id successfuly deleted");
         return redirect()->to(route('admins.orders.index'));
+    }
+
+    public function destroyNoReload(Request $request)
+    {
+        $order = Order::find($request['id']);
+        File::delete($order->takeImage());
+        $order->delete();
+        return response()->json(array(
+            'msg' => "Success"
+        ), 200);
     }
 }

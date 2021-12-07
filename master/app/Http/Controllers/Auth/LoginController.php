@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -20,6 +21,30 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
+    
+    public function redirectTo()
+    {
+        $role = Auth::user()->role->name;
+        switch ($role) {
+            case 'owner':
+                return '/admins/users';
+                break;
+            case 'employee':
+                return '/admins';
+                break;
+            case 'member':
+                return '/checkout';
+                break;
+            default:
+                return '/';
+                break;
+        }
+    }
+    
+    public function username()
+    {
+        return 'username';
+    }
 
     /**
      * Where to redirect users after login.

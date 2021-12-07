@@ -18,7 +18,7 @@
                     <h2 class="content-header-title float-start mb-0">Data Categories</h2>
                     <div class="breadcrumb-wrapper">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Admins</a>
+                            <li class="breadcrumb-item"><a href="{{ route('admins.index') }}">Admins</a>
                             </li>
                             <li class="breadcrumb-item active">Categories
                             </li>
