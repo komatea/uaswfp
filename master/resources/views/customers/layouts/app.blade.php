@@ -17,6 +17,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('eren') }}/css/settings.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('eren') }}/css/loader.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('eren') }}/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
     <link rel="shortcut icon" href="{{ asset('eren') }}/images/favicon.png">
 
@@ -32,54 +33,60 @@
 <body>
 
     <!--Loader-->
-    <div class="loader">
+    {{-- <div class="loader">
         <div class="spinner-load">
             <div class="dot1"></div>
             <div class="dot2"></div>
         </div>
-    </div>
+    </div> --}}
 
 
 
+    @php
+        $total = 0;
+        $quantity = 0;
+    @endphp
+    @if (session('cart'))
+        @foreach (session('cart') as $id => $details)
+            @php
+                $total += $details['price'] * $details['quantity'];
+                $quantity += $details['quantity'];
+            @endphp
+        @endforeach
+    @endif
     <header class="right-menu">
-        <div class="container-fluid">
-            <div class="row">
-                <!-- Start Navigation -->
-                <nav class="navbar navbar-default navbar-fixed-top bootsnav " style="padding: 0 25px"></nav>
-                <!-- Start Atribute Navigation -->
-                <div class="attr-nav">
-                    <ul>
-                        <li class="cart-toggler">
-                            <a href="#.">
-                                <i class="fa fa-shopping-cart"></i>
-                                <span class="badge">3</span>
-                            </a>
-                        </li>
-                        <li class="search"><a href="#."><i class="fa fa-search"></i></a>
-                        </li>
-                        {{-- <li class="side-menu"><a href="#."><i class="fa fa-bars"></i></a>
-                                </li> --}}
-                    </ul>
-                </div>
+        <!-- Start Navigation -->
+        <nav class="navbar navbar-default navbar-sticky bootsnav" style="padding: 0 20px;">
+            <!-- Start Atribute Navigation -->
+            <div class="attr-nav">
+                <ul>
+                    <li class="cart-toggler">
+                        <a href="#.">
+                            <i class="fa fa-shopping-cart"></i>
+                            <span class="badge">{{ $quantity }}</span>
+                        </a>
+                    </li>
+                    <li class="search"><a href="#."><i class="fa fa-search"></i></a></li>
+                </ul>
+            </div>
 
-                <!-- Start Header Navigation -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
-                        <i class="fa fa-bars"></i>
-                    </button>
-                    <a class="navbar-brand" href="index3.html"><img src="{{ asset('eren') }}/images/logo-black.png" class="logo" alt="">
-                    </a>
-                </div>
-                <!-- End Header Navigation -->
+            <!-- Start Header Navigation -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" ><img src="{{ asset('images') }}/logo.svg" class="logo" alt="" style="height: 20px;"></a>
+            </div>
+            <!-- End Header Navigation -->
 
-                <div class="collapse navbar-collapse" id="navbar-menu">
-                    <ul class="nav navbar-nav navbar-right" data-in="fadeIn" data-out="fadeOut">
-                        <li>
-                            <a href="{{ route('customers.index') }}">Home</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('customers.products.index') }}">Products</a>
-                            {{-- <ul class="dropdown-menu">
+            <div class="collapse navbar-collapse" id="navbar-menu">
+                <ul class="nav navbar-nav navbar-right" data-in="fadeIn" data-out="fadeOut">
+                    <li>
+                        <a href="{{ route('customers.index') }}">Home</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('customers.products.index') }}">Products</a>
+                        {{-- <ul class="dropdown-menu">
                                         <li><a href="grid.html">Grid Default</a>
                                         </li>
                                         <li><a href="grid_list.html">Grid Lists</a>
@@ -89,10 +96,15 @@
                                         <li><a href="list_sidebar.html">Lists Sidebar</a>
                                         </li>
                                     </ul> --}}
-                        </li>
-                        <li><a href="{{ route('customers.products.compare') }}">Compare</a>
-                        </li>
-                        {{-- <li class="dropdown megamenu-fw">
+                    </li>
+                    @auth
+                        @if (auth()->user()->role->name == 'member')
+                            <li><a href="{{ route('customers.products.compare') }}">Compare</a>
+                            <li><a href="{{ route('customers.orders.history') }}">History</a>
+                        @endif
+                    @endauth
+                    </li>
+                    {{-- <li class="dropdown megamenu-fw">
                                     <a href="#." class="dropdown-toggle" data-toggle="dropdown">pages</a>
                                     <ul class="dropdown-menu megamenu-content" role="menu">
                                         <li>
@@ -145,64 +157,61 @@
                                         </li>
                                     </ul>
                                 </li> --}}
-                        {{-- <li><a href="#.">about us</a>
+                    {{-- <li><a href="#.">about us</a>
                                 </li> --}}
-                        @auth
-                            <li><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Logout') }}</a></li>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
-                        @else
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                        @endauth
-                    </ul>
-                </div>
-
-                <!-- Start Side Menu -->
-                <div class="side">
-                    <a href="#." class="close-side"><i class="fa fa-times"></i></a>
-                    <div class="widget">
-                        <h6 class="title">Hi, nama disini </h6>
-                        <ul class="link">
-                            <li><a href="">My Cart</a>
-                            </li>
-                            <li><a href="#.">My History</a>
-                            </li>
-                            <li><a href="#.">Logout</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-                <!-- End Side Menu -->
-
-                <!--Search Bar-->
-                <div class="search-toggle">
-                    <div class="top-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search">
-                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                        </div>
-                    </div>
-                </div>
-                <ul class="cart-list">
-                    <li>
-                        <a href="#." class="photo"><img src="{{ asset('eren') }}/images/hover-cart.jpg" class="cart-thumb" alt="" />
-                        </a>
-                        <h6><a href="#.">Sacrificial Chair Design </a></h6>
-                        <p>Qty: 2 <span class="price">$170.00</span>
-                        </p>
-                    </li>
-                    <li class="total clearfix">
-                        <div class="pull-right"><strong>Shipping</strong>: $5.00</div>
-                        <div class="pull-left"><strong>Total</strong>: $173.00</div>
-                    </li>
-                    <li class="cart-btn">
-                        <a href="#." class="active">VIEW CART </a>
-                        <a href="#.">CHECKOUT </a>
-                    </li>
+                    @auth
+                        <li><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Logout') }}</a></li>
+                        <li><a><i data-feather="user"></i>&nbsp;&nbsp;{{ auth()->user()->name }} ({{ auth()->user()->role->name }})</a></li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">@csrf</form>
+                    @else
+                        <li><a href="{{ route('login') }}">Login</a></li>
+                    @endauth
                 </ul>
-                </nav>
             </div>
-        </div>
+
+
+            <!--Search Bar-->
+            <div class="search-toggle">
+                <div class="top-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <ul class="cart-list">
+                @if (session('cart'))
+                    @foreach (session('cart') as $id => $details)
+                        @if (!Auth::check())
+                            @php
+                                $tempPrice = substr($details['price'], 0, 1);
+                                $tempTotalPrice = substr($total, 0, 1);
+                                $details['price'] = str_pad($tempPrice, strlen($details['price']), 'x');
+                                $total = str_pad($tempTotalPrice, strlen($total), 'x');
+                            @endphp
+                        @else
+                            @php
+                                $details['price'] = number_format((float)$details['price']);
+                            @endphp
+                        @endif
+                        <li>
+                            <a class="photo"><img src="{{ asset($details['main_image']) }}" class="cart-thumb" alt="" /></a>
+                            <p><a href="{{ route('customers.products.show', $details['slug']) }}">{{ $details['name'] }}</a></p>
+                            <h6>Qty: {{ $details['quantity'] }}</h6>
+                            <span class="price">Rp.{{ $details['price'] }}</span>
+                        </li>
+                    @endforeach
+                @endif
+                <li class="total clearfix">
+                    <div class="pull-right"><strong>Total</strong>: Rp. {{ $total }}</div>
+                </li>
+                <li class="cart-btn">
+                    <a class="active" href="{{ route('customers.orders.checkout') }}" style="margin:0;">CHECKOUT</a>
+                </li>
+            </ul>
+        </nav>
     </header>
 
     <main>
@@ -217,9 +226,9 @@
                 <div class="col-md-3 col-sm-1"></div>
                 <div class="col-md-6 col-sm-10">
                     <div class="footer_panel text-center">
-                        <a href="index3.html"><img src="{{ asset('eren') }}/images/logo.png" alt="logo" class="content_space">
+                        <a href="index3.html"><img src="{{ asset('images') }}/logo.svg" alt="logo" class="content_space">
                         </a>
-                        <p class="content_space">Typi non habent claritatem insitam, est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus.</p>
+                        <p class="content_space" style="color: white;">BukaLaptop adalah platform pencarian informasi produk teknologi terbesar di Indonesia. Gunakanlah teknologi ini sebaik mungkin. Semoga anda menikmati dan selamat berbelanja! Happy Shopping!</p>
                         <ul class="social">
                             <li><a href="#."><i class="fa fa-facebook"></i></a>
                             </li>
@@ -273,11 +282,18 @@
     <script src="{{ asset('eren') }}/js/kinetic.js"></script>
     <script src="{{ asset('eren') }}/js/jquery.final-countdown.js"></script>
     <script src="{{ asset('eren') }}/js/functions.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     {{-- END CORE PLUGIN --}}
 
     <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
     @yield('javascript')
-
+    <script>
+        feather.replace({
+            width: 14,
+            height: 14
+        });
+    </script>
 </body>
 
 

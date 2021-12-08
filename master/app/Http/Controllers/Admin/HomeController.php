@@ -24,6 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $this->authorize('checkemployee');
         return view('admins.dashboard');
     }
 }

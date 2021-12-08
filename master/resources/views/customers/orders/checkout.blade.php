@@ -1,124 +1,129 @@
 @extends('customers.layouts.app')
 
 @section('content')
-<section class="page_menu">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h3 class="hidden">hidden</h3>
-          <ul class="breadcrumb">
-            <li><a href="index.html">Home</a></li>
-            <li>Products</li>
-            <li class="active">Shopping cart</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-  
-  
-  <!--Cart TAble-->
-  <section id="cart">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 margintop40">
-          <h4 class="heading uppercase bottom30">Create a new account</h4>
-          <p class="content_space">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-          <form class="contact-form">
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="jane.doe@example.com">
-              </div>
-              <div class="form-group">
-                <label for="pass">Password</label>
-                <input type="email" class="form-control" id="pass" placeholder="*****">
-              </div>
-                <input type="submit" class="uppercase margintop40 btn-dark" value="REgister now">
-                <input type="submit" class="btn-dark uppercase margintop40" value="Checkout as guest">
-          </form>
-        
-        </div>
-        <div class="col-md-6 margintop40">
-          <h4 class="heading uppercase bottom30">Login to your account</h4>
-          <form class="contact-form">
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email-log" placeholder="jane.doe@example.com">
-              </div>
-              <div class="form-group">
-                <label for="pass">Password</label>
-                <input type="email" class="form-control" id="pass-log" placeholder="*****">
-              </div>
-              <div class="form-group">
-              <label>
-                <div class="squaredFour">
-                  <input type="checkbox" value="None" id="squaredFour" name="check" checked />
-                  <label for="squaredFour"></label>
-               </div>
-               <h5>Keep me logged in</h5>
-                <a href="#.">Forgot your password?</a>
-               </label>
-              </div>
-              <div class="form-group">
-                 <input type="submit" class="uppercase margintop40 btn-light" value="Login to your account">
-              </div>
-          </form>
-          <a href="#." class="uppercase btn-common facebook-share"><i class="fa fa-facebook"></i>Login facebook</a>
-          <a href="#." class="uppercase btn-common twitter-share"><i class="fa fa-twitter"></i>Login twitter</a>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="accordion-container padding">
-                <div class="set">
-                  <a href="#." class="active uppercase"><i class="fa fa-plus"></i>Billing Information</a>
-                  <div class="content" style="display:block;">
-                    <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                    <p>when an unknown printer took a galley of type and scrambled it to make a type specimen book lorem Ipsum has been the industry's standard dummy text ever since the</p>
-                  </div>
-                </div>
-                <div class="set">
-                  <a href="#." class="uppercase"><i class="fa fa-plus"></i>Shipping Information </a>
-                  <div class="content">
-                    <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                    <p>when an unknown printer took a galley of type and scrambled it to make a type specimen book lorem Ipsum has been the industry's standard dummy text ever since the</p>
-                  </div>
-                </div>
-                <div class="set">
-                  <a href="#." class="uppercase"><i class="fa fa-plus"></i>Shipping Method</a>
-                  <div class="content">
-                    <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                    <p>when an unknown printer took a galley of type and scrambled it to make a type specimen book lorem Ipsum has been the industry's standard dummy text ever since the</p>
-                  </div>
-                </div>
-                
-                <div class="set">
-                  <a href="#."><i class="fa fa-plus"></i>Payment Information </a>
-                  <div class="content">
-                    <ul>
-                      <li><a href="#.">Bag & Luggage</a></li>
-                      <li><a href="#.">Eyewear</a></li>
-                      <li><a href="#.">Jewelry</a></li>
-                      <li><a href="#.">Shoes</a></li>
-                      <li><a href="#.">Skerts</a></li>
+    <section class="page_menu">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="hidden">hidden</h3>
+                    <ul class="breadcrumb">
+                        <li><a href="index.html">Home</a></li>
+                        <li>Products</li>
+                        <li class="active">Shopping cart</li>
                     </ul>
-                  </div>
-                </div>
-                <div class="set">
-                  <a href="#."><i class="fa fa-plus"></i>Order Review</a>
-                  <div class="content">
-                    <ul>
-                      <li><a href="#.">Bag & Luggage</a></li>
-                      <li><a href="#.">Eyewear</a></li>
-                      <li><a href="#.">Jewelry</a></li>
-                      <li><a href="#.">Shoes</a></li>
-                      <li><a href="#.">Skerts</a></li>
-                    </ul>
-                  </div>
                 </div>
             </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
+
+    <!--Cart TAble-->
+    <section id="cart" class="padding">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="heading uppercase marginbottom15">Shopping cart</h4>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="uppercase">Photo</th>
+                                    <th class="uppercase">Name</th>
+                                    <th class="uppercase">Quantity</th>
+                                    <th class="uppercase">Price</th>
+                                    <th class="uppercase">Subtotal</th>
+                                    <th class="uppercase"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @php $total = 0; @endphp
+                                @if (session('cart'))
+                                    @foreach (session('cart') as $id => $details)
+                                        @php $total += $details['price'] * $details['quantity']; @endphp
+                                        @if (!Auth::check())
+                                            @php
+                                                $subtotalPrice = $details['price'] * $details['quantity'];
+                                                $tempPrice = substr($details['price'], 0, 1);
+                                                $tempSubtotalPrice = substr($subtotalPrice, 0, 1);
+                                                $details['price'] = str_pad($tempPrice, strlen($details['price']), 'x');
+                                                $subtotalPrice = str_pad($tempSubtotalPrice, strlen($subtotalPrice), 'x');
+                                            @endphp
+                                        @else
+                                            @php
+                                                $subtotalPrice = $details['price'] * $details['quantity'];
+                                                $details['price'] = number_format($details['price']);
+                                                $subtotalPrice = number_format($subtotalPrice);
+                                            @endphp
+                                        @endif
+                                        <tr>
+                                            <td><img height="80px;" class="shopping-product" src="{{ asset($details['main_image']) }}" alt="your product"></td>
+                                            <td class="product-name">{{ $details['name'] }}</td>
+                                            <td>{{ $details['quantity'] }}</td>
+                                            <td class="price">
+                                                <h5>Rp. {{ $details['price'] }}</h5>
+                                            </td>
+                                            <td class="price">
+                                                <h5>Rp. {{ $subtotalPrice }}</h5>
+                                            </td>
+                                            <td class="text-center"><a class="btn-close" href="{{ route('customers.products.removeFromCart', $id) }}"><i class="fa fa-close"></i></a></td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <a href="{{ route('customers.products.index') }}" class="uppercase btn-light border-radius margintop30">CONTINUE SHOPPING</a>
+                        </div>
+                        <div class="col-sm-6 text-right">
+                            <a href="{{ route('customers.products.emptyCart') }}" class="uppercase btn-dark border-radius margintop30">CLEAR SHOPPING CART</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="shop_measures margintop40">
+                        <h4 class="heading uppercase bottom30">cart totals</h4>
+                        <table class="table table-responsive">
+                            <tbody>
+                                @if (!Auth::check())
+                                    @php
+                                        $tempTotalPrice = substr($total, 0, 1);
+                                        $total = str_pad($tempTotalPrice, strlen($total), 'x');
+                                    @endphp
+                                @else
+                                    @php
+                                        $total = number_format($total);
+                                    @endphp
+                                @endif
+                                <tr>
+                                    <td>Cart Subtotal</td>
+                                    <td class="text-right">
+                                        <h5>Rp. {{ $total }}</h5>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Shipping and Handling</td>
+                                    <td class="text-right">
+                                        <h5>FREE</h5>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Cart Totals</td>
+                                    <td class="text-right">
+                                        <h5 class="price">Rp. {{ $total }}</h5>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <a href="{{ route('customers.orders.checkout.submit') }}" class="uppercase btn-light border-radius margintop30">checkout (MEMBER ONLY)</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
 @endsection

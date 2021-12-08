@@ -61,20 +61,20 @@
                 <table class="table">
                     <tr>
                         <th>Product</th>
-                        <th>Quantity</th>
-                        <th>Subtotal</th>
+                        <th class="text-end">Quantity</th>
+                        <th class="text-end">Subtotal</th>
                     </tr>
                     @foreach ($order->orderdetails as $orderdetail)
                         <tr>
                             <td>{{ $orderdetail->name }}</td>
-                            <td>{{ $orderdetail->pivot->qty }}</td>
-                            <td>{{ $orderdetail->pivot->subtotal }}</td>
+                            <td class="text-end">{{ number_format($orderdetail->pivot->qty) }}</td>
+                            <td class="text-end">Rp. {{ number_format($orderdetail->pivot->subtotal) }}</td>
                         </tr>
                     @endforeach
                     <tr>
                         <td></td>
-                        <th>Total</th>
-                        <td>{{ $order->grand_total }}</td>
+                        <th class="text-end">Total</th>
+                        <td class="text-end">Rp. {{ number_format($order->grand_total) }}</td>
                     </tr>
                 </table>
 
@@ -87,17 +87,6 @@
                     <div class="divider-text">Change Status</div>
                 </div>
                 <div class="d-flex justify-content-center">
-                    @php
-                        if ($order->status == 'completed') {
-                            $statusBadgeColor = 'badge-light-success';
-                        } elseif ($order->status == 'delivering') {
-                            $statusBadgeColor = 'badge-light-warning';
-                        } elseif ($order->status == 'waiting') {
-                            $statusBadgeColor = 'badge-light-secondary';
-                        } elseif ($order->status == 'cancelled') {
-                            $statusBadgeColor = 'badge-light-danger';
-                        }
-                    @endphp
                     <form method="post" action="{{ route('admins.orders.changeStatus') }}">
                         @csrf
                         <input type="hidden" name="id" value="{{ $order->id }}">

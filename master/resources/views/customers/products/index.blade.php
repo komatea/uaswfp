@@ -1,20 +1,6 @@
 @extends('customers.layouts.app')
 
 @section('content')
-    <!--Page Header-->
-    <section class="header_layout2 padding">
-        <div class="container">
-            <div class="header_content padding">
-                <div class="ro{{ w"> }}
-                    <div class="col-md-12 text-center">
-                        <h2 class="heading_space uppercase">creative design<strong>lighting furniture</strong></h2>
-                        <h3 class="content_space">Typi non habent claritatem insitam.</h3>
-                        <a href="#." class="btn-common uppercase">view collection</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
 
     <!--Page Nav-->
@@ -35,7 +21,7 @@
 
 
     <section class="grid padding">
-        <h3 class="hidden">hidden</h3>{{  }}
+        <h3 class="hidden">hidden</h3>
         <div class="container">
             <div class="col-md-3 col-sm-3">
                 <aside class="sidebar">
@@ -61,7 +47,7 @@
                             </div>
                             <div class="set">
                                 <a href="#." class="uppercase">women <i class="fa fa-plus"></i></a>
-                                <div class="content">{{  }}
+                                <div class="content">
                                     <ul>
                                         <li><a href="#.">Bag & Luggage</a>
                                         </li>
@@ -142,17 +128,17 @@
                         <h5 class="uppercase marginbottom15">brands</h5>
                         <ul class="brands">
                             @foreach ($brands as $brand)
-                            <li><a href="#.">{{ $brand->name }}<span>(x)</span></a>
-                            </li>
+                                <li><a href="#.">{{ $brand->name }}</a>
+                                </li>
                             @endforeach
                         </ul>
                     </div>
                     <div class="widget content_space">
-                        <h5 class="uppercase mb-5">Category</h5>
+                        <h5 class="uppercase marginbottom15">Category</h5>
                         <ul class="category">
                             @foreach ($categories as $category)
-                            <li><a href="#.">{{ $category->name }}<span>(x)</span></a>
-                            </li>
+                                <li><a href="#.">{{ $category->name }}</a>
+                                </li>
                             @endforeach
                         </ul>
                     </div>
@@ -197,24 +183,39 @@
                 </div>
                 <div class="row shop-grid grid-view">
                     @foreach ($products as $product)
-                    <div class="col-md-4 col-sm-6">
-                        <div class="product_wrap heading_space">
-                            <div class="image">
-                                {{-- <div class="tag">
+                        @if (!Auth::check())
+                            @php
+                                $discountedPrice = $product->price * (1 - $product->disc / 100);
+                                $tempPrice = substr($product->price, 0, 1);
+                                $tempDiscountedPrice = substr($discountedPrice, 0, 1);
+                                $product->price = str_pad($tempPrice, strlen($product->price), 'x');
+                                $discountedPrice = str_pad($tempDiscountedPrice, strlen($discountedPrice), 'x');
+                            @endphp
+                        @else
+                            @php
+                                $discountedPrice = $product->price * (1 - $product->disc / 100);
+                                $product->price = number_format($product->price);
+                                $discountedPrice = number_format($discountedPrice);
+                            @endphp
+                        @endif
+                        <div class="col-md-4 col-sm-6">
+                            <div class="product_wrap heading_space">
+                                <div class="image">
+                                    {{-- <div class="tag">
                                     <div class="tag-btn">
                                         <span class="uppercase text-center">New</span>
                                     </div>
                                 </div> --}}
-                                <a class="fancybox" href="{{asset($product->takeImage())}}">
-                                    <img src="{{asset($product->takeImage())}}" alt="Product" class="img-responsive">
-                                </a>
-                            </div>
-                            <div class="product_desc">
-                                <p class="title"><a href="{{ route('customers.products.show', $product->slug) }}">{{ $product->name }}</a></p>
-                                <div class="list_content">
-                                    <h4 class="bottom30"><a href="{{ route('customers.products.show', $product->slug) }}">{{ $product->name }}</a></h4>
-                                    <p>{{ Str::limit($product->description, 100, '...') }}</p>
-                                    {{-- <ul class="review_list bottomtop30">
+                                    <a class="fancybox" href="{{ asset($product->takeImage()) }}">
+                                        <img src="{{ asset($product->takeImage()) }}" alt="Product" class="img-responsive">
+                                    </a>
+                                </div>
+                                <div class="product_desc">
+                                    <p class="title"><a href="{{ route('customers.products.show', $product->slug) }}">{{ $product->name }}</a></p>
+                                    <div class="list_content">
+                                        <h4 class="bottom30"><a href="{{ route('customers.products.show', $product->slug) }}">{{ $product->name }}</a></h4>
+                                        <p>{{ Str::limit($product->description, 100, '...') }}</p>
+                                        {{-- <ul class="review_list bottomtop30">
                                         <li><img alt="star" src="{{asset('eren')}}/images/star.png">
                                         </li>
                                         <li><a href="#.">10 review(s) </a>
@@ -222,24 +223,24 @@
                                         <li><a href="#.">Add your review</a>
                                         </li>
                                     </ul> --}}
-                                    <h4 class="price bottom30">Rp.{{ number_format($product->price * (1 - $product->disc / 100)) }} &nbsp;
-                                        <del><span class="discount">Rp.{{ number_format($product->price)}}</span></del>
-                                    </h4>
-                                    <div class="cart-buttons">
-                                        <a class="uppercase border-radius btn-dark" href="cart.html"><i class="fa fa-shopping-basket"></i> &nbsp; Add to cart</a>
-                                        <a class="icons" href="#.">
-                                            <i class="fa fa-heart-o"></i>
-                                        </a>
-                                        <a class="icons" href="#.">
-                                            <i class="fa fa-exchange"></i>
-                                        </a>
+                                        <h4 class="price bottom30">Rp.{{ $discountedPrice }} &nbsp;
+                                            <del><span class="discount">Rp.{{ $product->price }}</span></del>
+                                        </h4>
+                                        <div class="cart-buttons">
+                                            <a class="uppercase border-radius btn-dark" href="cart.html"><i class="fa fa-shopping-basket"></i> &nbsp; Add to cart</a>
+                                            <a class="icons" href="#.">
+                                                <i class="fa fa-heart-o"></i>
+                                            </a>
+                                            <a class="icons" href="#.">
+                                                <i class="fa fa-exchange"></i>
+                                            </a>
+                                        </div>
                                     </div>
+                                    <span class="price">Rp.{{ $discountedPrice }} &nbsp; <del><span class="discount">Rp.{{ $product->price }}</span></del></span>
+                                    <a href="{{ route('customers.products.addToCart', $product->slug) }}" onclick="return confirm('Are you sure?')"><i class="fa fa-shopping-bag open"></i></a>
                                 </div>
-                                <span class="price">Rp.{{ number_format($product->price * (1 - $product->disc / 100)) }} &nbsp;   <del><span class="discount">Rp.{{ number_format($product->price)}}</span></del></span>                                
-                                <a class="fancybox" href="{{asset('eren')}}/images/product5.jpg" data-fancybox-group="gallery"><i class="fa fa-shopping-bag open"></i></a>
                             </div>
                         </div>
-                    </div>
                     @endforeach
 
 
@@ -355,9 +356,6 @@
                 <div class="row">
                     <div class="d-flex justify-content-center mb-3">
                         {{ $products->withQueryString()->links() }}
-                    </div>
-                    <div class="col-md-6 col-sm-6 text-right">
-                        <h5 class="result uppercase">Showing 1-12 of 20 relults</h5>
                     </div>
                 </div>
             </div>

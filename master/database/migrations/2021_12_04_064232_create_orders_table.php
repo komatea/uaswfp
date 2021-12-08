@@ -16,7 +16,7 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->dateTime('orderdate');
-            $table->integer('grand_total');
+            $table->integer('grand_total')->nullable();
             $table->foreignId('customer_id')->constrained('users');
             $table->foreignId('employee_id')->nullable()->constrained('users');
             $table->string('status');

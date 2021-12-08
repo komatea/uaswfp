@@ -612,8 +612,8 @@ header .navbar-brand {
   margin-left:0;
 }
 header .wrap-sticky nav.navbar.bootsnav{
-	background:#303030;
-	border:none;
+	/* background:#303030; */
+	/* border:none; */
 }
 header nav.navbar.bootsnav ul.nav > li {
 	margin:0 2px;
@@ -2335,7 +2335,7 @@ footer{
 	position:relative;
 }
 footer.plain_footer{
-	background:url(../images/footer-plan.jpg) no-repeat;
+	background:url(https://images.pexels.com/photos/159393/gamepad-video-game-controller-game-controller-controller-159393.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260) no-repeat;
 	background-size:cover;
 }
 .footer_panel h4{

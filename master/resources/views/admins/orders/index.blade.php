@@ -105,7 +105,7 @@
                             <td>{{ $order->id }}</td>
                             <td>{{ $order->customer->name }}</td>
                             <td>{{ $order->orderdate }}</td>
-                            <td>{{ $order->grand_total }}</td>
+                            <td>Rp. {{ number_format($order->grand_total) }}</td>
                             <td>{{ $order->employee ? $order->employee->name : '-' }}</td>
                             @php
                                 if ($order->status == 'completed') {

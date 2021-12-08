@@ -19,125 +19,304 @@
 
 
     <!--Special Design Product-->
-    <div class="row">
-        <div class="col-xs-5">
-            <section style="margin: 100px 0">
-                <div class="container">
-                    <div class="row">
-                        <div class="design clearfix">
-                            <div class="col-5 col-offset-1">
-                                <div class="design_img">
-                                    {{-- <div class="tag">
-                    <div class="tag-btn">
-                      <span class="uppercase text-center">New
-                      </span>
+    <div class="container">
+        <div class="row">
+            <form action="{{ route('customers.products.compare') }}" method="get">
+                <div class="col-sm-6">
+                    <div class="">
+                        <label for="firstlaptop" class="form-label">First Laptop</label>
+                        <select class="form-control select2" name="firstlaptop" id="firstlaptop">
+                            @foreach ($products as $product)
+                                <option value="{{ $product->id }}">{{ $product->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('firstlaptop')<span class="text-danger" role="alert"><small>{{ $message }}</small></span>@enderror
                     </div>
-                  </div> --}}
-                                    <img src="{{ asset('eren') }}/images/design-prouct.jpg" alt="desing Product">
-                                </div>
-                            </div>
-                            <div class="col-md-5 col-md-offset-1">
-                                <div class="descrp">
-                                    <h3 class="uppercase heading_space">
-                                        <a href="product_detail.html">Sacrificial Chair Design
-                                        </a>
-                                    </h3>
-                                    <ul class="review">
+                </div>
+                <div class="col-sm-6">
+                    <div class="">
+                        <label for="secondlaptop" class="form-label">Second Laptop</label>
+                        <select class="form-control select2" name="secondlaptop" id="secondlaptop">
+                            @foreach ($products as $product)
+                                <option value="{{ $product->id }}">{{ $product->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('secondlaptop')<span class="text-danger" role="alert"><small>{{ $message }}</small></span>@enderror
+                    </div>
+                </div>
+                <div class="col-sm-12" style="display: flex; justify-content: center; margin-top: 20px; margin-bottom: 20px;">
+                    <button class="btn btn-primary" type="submit">SUBMIT</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-                                    </ul>
-                                    <h3 class="price marginbottom15">
-                                        <i class="fa fa-gbp" aria-hidden="true">
-                                        </i>170.00 &nbsp;
-                                        <span>
-                                            <i class="fa fa-gbp" aria-hidden="true">
-                                            </i>69.00
-                                        </span>
-                                    </h3>
-                                    <p class="marginbottom15 detail">Size:
-                                        <span>Large
-                                        </span>
-                                    </p>
-                                    <p class="marginbottom15 detail">Color:
-                                        <span>Grey white & Brown
-                                        </span>
-                                    </p>
-                                    <p class="detail">Dimensions:
-                                        <span>Height: 13cm x Length: 15cm
-                                        </span>
-                                    </p>
-                                    <div class="countdown countdown-container margintop15" data-start="1362139200" data-end="1388461320" data-now="1387461319" data-border-color="#79b6c8">
-                                        <div class="clock row">
-                                            <div class="clock-item clock-days countdown-time-value col-xs-6 col-sm-3">
-                                                <div class="wrap">
-                                                    <div class="inner">
-                                                        <div id="canvas-days" class="clock-canvas">
-                                                        </div>
-                                                        <div class="text">
-                                                            <p class="val">0
-                                                            </p>
-                                                        </div>
-                                                        <!-- /.text -->
-                                                        <p class="type-days type-time">DAYS
-                                                        </p>
-                                                    </div>
-                                                    <!-- /.inner -->
-                                                </div>
-                                                <!-- /.wrap -->
-                                            </div>
-                                            <!-- /.clock-item -->
-                                            <div class="clock-item clock-hours countdown-time-value col-xs-6 col-sm-3">
-                                                <div class="wrap">
-                                                    <div class="inner">
-                                                        <div id="canvas-hours" class="clock-canvas">
-                                                        </div>
-                                                        <div class="text">
-                                                            <p class="val">0
-                                                            </p>
-                                                        </div>
-                                                        <p class="type-hours type-time">HOURS
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="clock-item clock-minutes countdown-time-value col-xs-6 col-sm-3">
-                                                <div class="wrap">
-                                                    <div class="inner">
-                                                        <div id="canvas-minutes" class="clock-canvas">
-                                                        </div>
-                                                        <div class="text">
-                                                            <p class="val">0
-                                                            </p>
-                                                        </div>
-                                                        <p class="type-minutes type-time">MINUTES
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="clock-item clock-seconds countdown-time-value col-xs-6 col-sm-3">
-                                                <div class="wrap">
-                                                    <div class="inner">
-                                                        <div id="canvas-seconds" class="clock-canvas">
-                                                        </div>
-                                                        <div class="text">
-                                                            <p class="val">0
-                                                            </p>
-                                                        </div>
-                                                        <p class="type-seconds type-time">SECONDS
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+    @if (request('firstlaptop') != '' && request('secondlaptop') != '')
+        <section>
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-sm-6">
+
+                        <div id="slider_product_1" class="cbp margintop40">
+                            <div class="cbp-item">
+                                <div class="cbp-caption">
+                                    <div class="cbp-caption-defaultWrap">
+                                        <img src="{{ asset($firstlaptop->takeImage()) }}" alt="">
                                     </div>
                                 </div>
                             </div>
+                            @php
+                                $imageProducts = $firstlaptop->imageProducts;
+                            @endphp
+                            @if ($imageProducts->count())
+                                @foreach ($imageProducts as $imageProduct)
+                                    <div class="cbp-item">
+                                        <div class="cbp-caption">
+                                            <div class="cbp-caption-defaultWrap">
+                                                <img src="{{ asset($imageProduct->takeImage()) }}" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
+
                         </div>
+                        <div id="js-pagination-slider_1">
+                            @if ($imageProducts->count())
+                                @foreach ($imageProducts as $imageProduct)
+                                    <div class="cbp-pagination-item cbp-pagination-active">
+                                        <img src="{{ asset($imageProduct->takeImage()) }}" alt="">
+                                    </div>
+                                @endforeach
+                            @endif
+                        </div>
+
+                        <table class="table table-responsive table-striped">
+                            <tbody>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>{{ $firstlaptop->name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Description</td>
+                                    <td>{{ $firstlaptop->description }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Brand</td>
+                                    <td>{{ $firstlaptop->brand->name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Price</td>
+                                    <td>Rp.{{ number_format($firstlaptop->price * (1 - $firstlaptop->disc / 100)) }} &nbsp; <del><span class="discount">Rp.{{ number_format($firstlaptop->price) }}</span></del> </td>
+                                </tr>
+                                <tr>
+                                    <td>Graphics Card</td>
+                                    <td>{{ $firstlaptop->graphics_card ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Processor</td>
+                                    <td>{{ $firstlaptop->processor ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td>RAM</td>
+                                    <td>{{ $firstlaptop->ram ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Hardisk</td>
+                                    <td>{{ $firstlaptop->hardisk ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td>SSD</td>
+                                    <td>{{ $firstlaptop->ssd ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Display</td>
+                                    <td>{{ $firstlaptop->display ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Keyboard</td>
+                                    <td>{{ $firstlaptop->keyboard ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Camera</td>
+                                    <td>{{ $firstlaptop->camera ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Wifi</td>
+                                    <td>{{ $firstlaptop->wifi ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Interfaces</td>
+                                    <td>{!! $firstlaptop->interfaces ?? '-' !!}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-6">
+
+                        <div id="slider_product_2" class="cbp margintop40">
+                            <div class="cbp-item">
+                                <div class="cbp-caption">
+                                    <div class="cbp-caption-defaultWrap">
+                                        <img src="{{ asset($secondlaptop->takeImage()) }}" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            @php
+                                $imageProducts = $secondlaptop->imageProducts;
+                            @endphp
+                            @if ($imageProducts->count())
+                                @foreach ($imageProducts as $imageProduct)
+                                    <div class="cbp-item">
+                                        <div class="cbp-caption">
+                                            <div class="cbp-caption-defaultWrap">
+                                                <img src="{{ asset($imageProduct->takeImage()) }}" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
+                        </div>
+                        <div id="js-pagination-slider_2">
+                            @if ($imageProducts->count())
+                                @foreach ($imageProducts as $imageProduct)
+                                    <div class="cbp-pagination-item cbp-pagination-active">
+                                        <img src="{{ asset($imageProduct->takeImage()) }}" alt="">
+                                    </div>
+                                @endforeach
+                            @endif
+                        </div>
+
+                        <table class="table table-responsive table-striped">
+                            <tbody>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>{{ $secondlaptop->name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Description</td>
+                                    <td>{{ $secondlaptop->description }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Brand</td>
+                                    <td>{{ $secondlaptop->brand->name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Price</td>
+                                    <td>Rp.{{ number_format($secondlaptop->price * (1 - $secondlaptop->disc / 100)) }} &nbsp; <del><span class="discount">Rp.{{ number_format($secondlaptop->price) }}</span></del> </td>
+                                </tr>
+                                <tr>
+                                    <td>Graphics Card</td>
+                                    <td>{{ $secondlaptop->graphics_card ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Processor</td>
+                                    <td>{{ $secondlaptop->processor ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td>RAM</td>
+                                    <td>{{ $secondlaptop->ram ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Hardisk</td>
+                                    <td>{{ $secondlaptop->hardisk ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td>SSD</td>
+                                    <td>{{ $secondlaptop->ssd ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Display</td>
+                                    <td>{{ $secondlaptop->display ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Keyboard</td>
+                                    <td>{{ $secondlaptop->keyboard ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Camera</td>
+                                    <td>{{ $secondlaptop->camera ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Wifi</td>
+                                    <td>{{ $secondlaptop->wifi ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Interfaces</td>
+                                    <td>{!! $secondlaptop->interfaces ?? '-' !!}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </section>
-        </div>
-        
-    </div>
+            </div>
+        </section>
+    @endif
     {{-- End section special --}}
 
+@endsection
+
+@section('javascript')
+    <script>
+        $('.select2').select2();
+
+        $('#slider_product_1').cubeportfolio({
+            layoutMode: 'slider',
+            drag: true,
+            auto: false,
+            autoTimeout: 5000,
+            autoPauseOnHover: true,
+            showNavigation: false,
+            showPagination: false,
+            rewindNav: true,
+            scrollByPage: true,
+            gridAdjustment: 'responsive',
+            mediaQueries: [{
+                width: 1,
+                cols: 1
+            }],
+            gapHorizontal: 0,
+            gapVertical: 0,
+            caption: '',
+            displayType: 'fadeIn',
+            displayTypeSpeed: 400,
+
+            plugins: {
+                slider: {
+                    pagination: '#js-pagination-slider_1',
+                    paginationClass: 'cbp-pagination-active',
+                }
+            }
+        });
+
+        $('#slider_product_2').cubeportfolio({
+            layoutMode: 'slider',
+            drag: true,
+            auto: false,
+            autoTimeout: 5000,
+            autoPauseOnHover: true,
+            showNavigation: false,
+            showPagination: false,
+            rewindNav: true,
+            scrollByPage: true,
+            gridAdjustment: 'responsive',
+            mediaQueries: [{
+                width: 1,
+                cols: 1
+            }],
+            gapHorizontal: 0,
+            gapVertical: 0,
+            caption: '',
+            displayType: 'fadeIn',
+            displayTypeSpeed: 400,
+
+            plugins: {
+                slider: {
+                    pagination: '#js-pagination-slider_2',
+                    paginationClass: 'cbp-pagination-active',
+                }
+            }
+        });
+    </script>
 @endsection

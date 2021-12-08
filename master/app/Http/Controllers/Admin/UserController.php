@@ -12,6 +12,7 @@ class UserController extends Controller
 
     public function index()
     {
+        $this->authorize('checkowner');
         $users = new User();
         if (request('keyword')) {
             $wildcards = '%' . request('keyword') . '%';
@@ -24,6 +25,7 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('checkowner');
         $data = $request->all();
         $data['password'] = Hash::make($data['password']);
         $data['role_id'] = 2;
@@ -35,6 +37,7 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
+        $this->authorize('checkowner');
         $attr = $request->all();
         $user->update($attr);
         session()->flash("success", "User $user->id successfuly updated");
@@ -43,6 +46,7 @@ class UserController extends Controller
 
     public function updateInline(Request $request)
     {
+        $this->authorize('checkowner');
         $id = $request->get('id');
         $fname = $request->get('fname');
         $value = $request->get('value');
@@ -57,6 +61,7 @@ class UserController extends Controller
 
     public function changeUserStatus(Request $request)
     {
+        $this->authorize('checkowner');
         $user = User::find($request['id']);
         $user->status = $request['status'];
         $user->save();

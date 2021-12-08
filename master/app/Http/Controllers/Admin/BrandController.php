@@ -12,6 +12,8 @@ class BrandController extends Controller
 {
     public function index()
     {
+        $this->authorize('checkemployee');
+
         $brands = new Brand();
         if (request('keyword')) {
             $wildcards = '%' . request('keyword') . '%';
@@ -24,6 +26,8 @@ class BrandController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('checkemployee');
+
         $data = $request->all();
         $data['slug'] = Str::slug($request['name']);
         Brand::create($data);
@@ -32,6 +36,8 @@ class BrandController extends Controller
     }
 
     public function changeImage(Request $request){
+        $this->authorize('checkemployee');
+
         $id = $request->get('id');
         $brand = Brand::find($id);
        
@@ -50,6 +56,8 @@ class BrandController extends Controller
 
     public function updateInline(Request $request)
     {
+        $this->authorize('checkemployee');
+
         $id = $request->get('id');
         $fname = $request->get('fname');
         $value = $request->get('value');
@@ -62,6 +70,8 @@ class BrandController extends Controller
 
     public function destroyNoReload(Request $request)
     {
+        $this->authorize('checkemployee');
+
         $brand = Brand::find($request['id']);
         File::delete($brand->takeImage());
         $brand->delete();

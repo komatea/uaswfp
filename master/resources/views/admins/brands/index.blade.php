@@ -76,10 +76,10 @@
                                 <form action="{{ route('admins.brands.changeImage') }}" class='d-none' method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $brand->id }}">
-                                    <input type="file" id="changeImage" name="logo_image" onchange="document.getElementById('changeImageButton').click()">
-                                    <button type="submit" id="changeImageButton"></button>
+                                    <input type="file" id="changeImage_{{ $brand->id }}" name="logo_image" onchange="document.getElementById('changeImageButton_{{ $brand->id }}').click()">
+                                    <button type="submit" id="changeImageButton_{{ $brand->id }}"></button>
                                 </form>
-                                <button class="btn" onclick="document.getElementById('changeImage').click()">
+                                <button class="btn" onclick="document.getElementById('changeImage_{{ $brand->id }}').click()">
                                     <img src='{{ asset($brand->takeImage()) }}' alt='Logo Brand' height='50px'>
                                 </button>
                             </td>

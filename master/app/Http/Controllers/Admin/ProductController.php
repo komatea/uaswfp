@@ -13,6 +13,7 @@ class ProductController extends Controller
 {
     public function index()
     {
+        $this->authorize('checkemployee');
         $products = new Product();
         $products = $products->join('brands', 'products.brand_id', '=', 'brands.id')->join('categories', 'products.category_id', '=', 'categories.id');
         if (request('keyword')) {
@@ -25,6 +26,7 @@ class ProductController extends Controller
 
     public function create()
     {
+        $this->authorize('checkemployee');
         $brands = Brand::all();
         $categories = Category::all();
         return view('admins.products.create', compact('brands', 'categories'));
@@ -32,6 +34,7 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('checkemployee');
         $request->validate([
             'name' => 'required',
             'price' => ['required', 'numeric'],
@@ -58,11 +61,13 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
+        $this->authorize('checkemployee');
         return view('admins.products.show', compact('product'));
     }
 
     public function edit(Product $product)
     {
+        $this->authorize('checkemployee');
         $brands = Brand::all();
         $categories = Category::all();
         return view('admins.products.edit', compact('product', 'brands', 'categories'));
@@ -70,6 +75,7 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
+        $this->authorize('checkemployee');
         $attr = $request->all();
 
         if ($request->file('main_image')) {
@@ -87,6 +93,7 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        $this->authorize('checkemployee');
         $product->delete();
         session()->flash('success', "Product $product->id successfuly deleted");
         return redirect()->to(route('admins.products.index'));
@@ -94,6 +101,7 @@ class ProductController extends Controller
 
     public function destroyNoReload(Request $request)
     {
+        $this->authorize('checkemployee');
         $product = Product::find($request['id']);
         File::delete($product->takeImage());
         $product->delete();
@@ -101,5 +109,4 @@ class ProductController extends Controller
             'msg' => "Success"
         ), 200);
     }
-
 }

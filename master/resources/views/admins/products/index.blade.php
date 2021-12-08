@@ -56,7 +56,8 @@
             <div class="card-body">
                 <div class="divider mb-4">
                     <div class="divider-text">
-                        {{ $products->onEachSide(1)->withQueryString()->links() }}</div>
+                        {{ $products->onEachSide(1)->withQueryString()->links() }}
+                    </div>
                 </div>
 
                 <table class="table">

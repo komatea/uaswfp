@@ -10,84 +10,63 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $products = Product::paginate(10);
+        $products = Product::paginate(6);
         return view('customers.products.index', ['products' => $products, 'categories' => Category::all(), 'brands' => Brand::all()]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function show(Product $product)
     {
         $categoryProduct = $product->category->id;
 
         $upsells = Product::where('category_id', $categoryProduct )->get();
-        // dd($upsells);
         return view('customers.products.show', ['product' => $product,'upsells'=>$upsells]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Product $product)
+    public function compare(Request $request)
     {
-        //
+        $this->authorize('checkmember');
+
+        $products = Product::all();
+        $firstlaptop = "";
+        $secondlaptop = "";
+        if($request['firstlaptop']) $firstlaptop = Product::find($request['firstlaptop']);
+        if($request['secondlaptop']) $secondlaptop = Product::find($request['secondlaptop']);
+        return view('customers.products.compare', compact('products', 'firstlaptop', 'secondlaptop'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Product $product)
+    public function addToCart(Product $product)
     {
-        //
+        $cart = session()->get('cart');
+        if (!isset($cart[$product->id])) {
+            $cart[$product->id] = [
+                "name" => $product->name,
+                "quantity" => 1,
+                "price" => $product->price * (1 - $product->disc / 100),
+                "main_image" => $product->takeImage(),
+                "slug" => $product->slug,
+            ];
+        } else {
+            $cart[$product->id]['quantity']++;
+        }
+
+        session()->put('cart', $cart);
+        return redirect()->back()->with('success', 'Product added to Cart Succesfully!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Product $product)
+    
+    public function removeFromCart($id)
     {
-        //
+        $cart = session()->get('cart');
+        unset($cart[$id]);
+        session()->put('cart', $cart);
+        return redirect()->back()->with('success', 'Product removed to Cart Succesfully!');
+    }
+
+    public function emptyCart()
+    {
+        session()->forget('cart');
+        return redirect()->back()->with('success', 'Cart is now Empty');
     }
 }

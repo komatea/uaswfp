@@ -12,6 +12,8 @@ class CategoryController extends Controller
 {
     public function index()
     {
+        $this->authorize('checkemployee');
+
         $categories = new Category();
         if (request('keyword')) {
             $wildcards = '%' . request('keyword') . '%';
@@ -24,6 +26,8 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('checkemployee');
+
         $data = $request->all();
         $data['slug'] = Str::slug($request['name']);
         Category::create($data);
@@ -33,6 +37,8 @@ class CategoryController extends Controller
 
     public function updateInline(Request $request)
     {
+        $this->authorize('checkemployee');
+
         $id = $request->get('id');
         $fname = $request->get('fname');
         $value = $request->get('value');
@@ -45,6 +51,8 @@ class CategoryController extends Controller
 
     public function destroyNoReload(Request $request)
     {
+        $this->authorize('checkemployee');
+
         $category = Category::find($request['id']);
         $category->delete();
         return response()->json(array(

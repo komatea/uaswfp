@@ -80,7 +80,14 @@
                             <td class="editable text-primary" id='td_password_{{ $user->id }}'>reset password</td>
                             <td class="editable" id='td_address_{{ $user->id }}'>{{ $user->address }}</td>
                             <td class="editable" id='td_phone_num_{{ $user->id }}'>{{ $user->phone_num }}</td>
-                            <td id='td_status_{{ $user->id }}'>{{ $user->status }}</td>
+                            @php
+                                if ($user->status == 'active') {
+                                    $statusBadgeColor = 'badge-light-success';
+                                } elseif ($user->status == 'suspended') {
+                                    $statusBadgeColor = 'badge-light-danger';
+                                }
+                            @endphp
+                            <td id='td_status_{{ $user->id }}'><span class="badge{{ " $statusBadgeColor" }}">{{ $user->status }}</span></td>
                             <td>
                                 <form action="{{ route('admins.users.changeUserStatus') }}" method="post">
                                     @csrf
